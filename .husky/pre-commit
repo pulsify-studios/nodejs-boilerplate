@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Get local Branch Name
+BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+# Shell uses posix EXTENDED Regex. Please be mindful of this. (PHP Version lower than 7)
+REGEX="^(feature|bugfix|hotfix|release)+\/([A-Z*a-z*-_])+$"
+
+# Set message
+MESSAGE="The branch name does not adhere to the naming convention. E.g. 'feature/example-branch-name'."
+
+# Check local branch name matches
+if [[ ! $BRANCH =~ $REGEX ]]
+then
+    echo "$MESSAGE"
+    exit 1
+fi

@@ -1,0 +1,10 @@
+.idea/
+.vscode/
+.history/
+*.vsix
+bin/
+node_modules/
+tmp/
+coverage/
+.husky/_/
+.env

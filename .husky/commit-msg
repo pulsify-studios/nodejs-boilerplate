@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+MESSAGE=$(cat $1)
+BRANCH_NAME=$(git symbolic-ref --short HEAD | sed 's|^[^/]*\(/[^/]*/\).*$|\1|' | tr -d "/")
+
+# Shell uses posix EXTENDED Regex. Please me mindful of this. (PHP Version lower than 7)
+REGEX="^(feat|fix|chore|refactor|revert|security|test|style|perf|docs)+\: (.+)$"
+
+# Set message
+ERR_MESSAGE="The commit message does not adhere to the naming convention. E.g. '<type>: <jira_ref> - This is an example commit'. <type> can be replaced with any of the commit types specified at https://medium.com/neudesic-innovation/conventional-commits-a-better-way-78d6785c2e08."
+
+# Check local commit message matches convention
+if [[ ! $MESSAGE =~ $REGEX ]]
+then
+    echo "$ERR_MESSAGE"
+    echo "$MESSAGE"
+    exit 1
+fi
