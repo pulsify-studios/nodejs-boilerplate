@@ -6,10 +6,11 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc -w",
+    "build": "esbuild --bundle src/index.ts --format=esm --minify --platform=node --outdir=./dist && tsc --emitDeclarationOnly",
+    "dev": "esbuild --sourcemap --bundle src/index.ts --format=esm --watch --platform=node --outdir=./dist && tsc --emitDeclarationOnly",
     "lint": "eslint -c .eslintrc.json src/**/*",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "prepare": "npm run build",
     "postinstall": "node -e \"if (require('fs').existsSync('.git')) { process.exit(1) } \" || husky install"
   },
@@ -41,6 +42,7 @@
     "@types/node": "~18.14.2",
     "@typescript-eslint/eslint-plugin": "~5.53.0",
     "@typescript-eslint/parser": "~5.53.0",
+    "esbuild": "^0.19.1",
     "eslint-config-airbnb-base": "~15.0.0",
     "eslint-config-airbnb-typescript": "~17.0.0",
     "eslint-plugin-require-extensions": "^0.1.3",

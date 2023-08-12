@@ -11,9 +11,7 @@ phases:
       - npm config set //npm.pkg.github.com/:_authToken $GITHUB_ACCESS_TOKEN
       - npm config set @pulsify-studios:registry https://npm.pkg.github.com
       - npm install
-      - cp package.json ./dist/package.json
       - cd ./dist
-      - npm install -omit=dev
       - zip -r $CODEBUILD_BUILD_NUMBER.zip .
       - aws s3 cp $CODEBUILD_BUILD_NUMBER.zip s3://$S3_BUCKET/$LAMBDA_FUNCTION_NAME/
       - aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --s3-bucket $S3_BUCKET --s3-key $LAMBDA_FUNCTION_NAME/$CODEBUILD_BUILD_NUMBER.zip --publish
