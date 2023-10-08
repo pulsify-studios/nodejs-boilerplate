@@ -5,7 +5,7 @@
 
 export default {
   clearMocks: true,
-  collectCoverage: false,
+  collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
   extensionsToTreatAsEsm: ['.ts'],
@@ -16,10 +16,17 @@ export default {
   },
   transform: {
     '^.+\\.[tj]sx?$': [
-      'ts-jest',
-      { useESM: true },
+      'esbuild-jest',
+      {
+        format: 'esm',
+        target: 'es2022',
+        sourcemap: true,
+      },
     ],
   },
+  setupFiles: [
+    './test/setup/dotenv.ts',
+  ],
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
   testEnvironment: 'node',
   testRegex: '(\\/test\\/|.*)(test|spec)\\.[jt]sx?$',
