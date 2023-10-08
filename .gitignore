@@ -8,3 +8,4 @@ tmp/
 coverage/
 .husky/_/
 .env
+.env.testing
